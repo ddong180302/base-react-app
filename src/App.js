@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import MyComponent from './components/MyComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <button onClick={() => dispatch(increaseCounter())}>Increase</button>
         <button onClick={() => dispatch(decreaseCounter())}>Decrease</button>
       </header>
+      <MyComponent />
     </div>
   );
 }
