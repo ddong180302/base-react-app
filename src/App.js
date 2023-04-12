@@ -6,7 +6,6 @@ import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
 import React from 'react';
 
 class App extends React.Component {
-
   state = {
     name: 'dong',
     address: 'da nang',
@@ -14,6 +13,14 @@ class App extends React.Component {
   }
 
 
+  handleOnClick = (event) => {
+    console.log('check state: ', this.state)
+    console.log(event)
+  }
+
+  handleOn(event) {
+    console.log(event)
+  }
   render() {
     return (
       <div className="App">
@@ -21,6 +28,9 @@ class App extends React.Component {
         {
           this.state.name
         }
+        <button type='button' onMouseOver={(event) => this.handleOn(event)}>Click Me</button>
+        <button type='button' onClick={(event) => this.handleOnClick(event)}>Click Me</button>
+
         <MyComponent />
       </div>
     );
