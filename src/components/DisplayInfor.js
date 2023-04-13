@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 import React, { useState } from "react";
 import './DisplayInfor.scss';
+import { useEffect } from "react";
 
 const DisplayInfor = (props) => {
     const { listUsers } = props;
@@ -10,6 +11,13 @@ const DisplayInfor = (props) => {
     const handleShowHideListUser = () => {
         setShowHideListUser(!isShowHideListUser)
     }
+    console.log('render: ')
+    useEffect(() => {
+        console.log('useEffect: ')
+        if (listUsers.length === 0) {
+            alert('me')
+        }
+    }, [listUsers]);
 
     return (
         <div>

@@ -1,6 +1,7 @@
+
 import AddUserInfor from "./AddUserInfor";
 import DisplayInfor from "./DisplayInfor";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const MyComponent = (props) => {
 
@@ -23,6 +24,7 @@ const MyComponent = (props) => {
             }
         ]
     )
+
     const handleAddNewUser = (Objectj) => {
         let coppyListUsers = [...listUsers]
         setListUsers([Objectj, ...coppyListUsers])
@@ -35,6 +37,9 @@ const MyComponent = (props) => {
         setListUsers(coppyListUsers)
     }
 
+
+
+
     return (
         <div>
             <AddUserInfor
@@ -45,7 +50,7 @@ const MyComponent = (props) => {
                 listUsers={listUsers}
                 handleDeleteUser={handleDeleteUser}
             />
-        </div>
+        </div >
     );
 }
 export default MyComponent;

@@ -6,9 +6,7 @@ const AddUserInfor = (props) => {
     let [age, setAge] = useState('21')
 
     const handleOnChangeName = (event) => {
-
         setName(event.target.value)
-
     }
 
     const handleOnChangeAge = (event) => {
