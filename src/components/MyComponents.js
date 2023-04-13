@@ -1,31 +1,18 @@
 import React from "react";
+import UserInfor from "./UserInfor";
+import DisplayInfor from "./DisplayInfor";
 
 class MyComponent extends React.Component {
-    state = {
-        name: 'dong',
-        address: 'da nang',
-        age: 21
-    }
 
-    handleOnChange = (event) => {
-
-    }
-    handleOnClick = (event) => {
-        event.preventDefault();
-        console.log('check')
-    }
     //JSX
     render() {
-
+        const name = 'dong', age = '21';
         return (
-            <div>my name
-                {
-                    this.state.name
-                }
-                <form onSubmit={(event) => this.handleOnClick(event)}>
-                    <input type='text' onChange={(event) => this.handleOnChange(event)} />
-                    <button>click me</button>
-                </form></div>
+            <div>
+                <UserInfor />
+                <br />
+                <DisplayInfor name={name} age={age} />
+            </div>
         );
     }
 }
