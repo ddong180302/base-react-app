@@ -1,38 +1,22 @@
-import React from "react";
+// import { useState } from 'react';
+import React, { useState } from "react";
 import './DisplayInfor.scss';
-
-// class DisplayInfor extends React.Component {
-
-
-//     render() {
-//         const { listUsers } = this.props;
-//         return (
-//             <div>
-//                 {
-//                     true &&
-//                     <div>
-//                         {listUsers.map((item) => {
-//                             return (
-//                                 <div key={item.id} className={+item.age > 18 ? "green" : "red"}>
-//                                     <div>ten: {item.name}</div>
-//                                     <div>tuoi: {item.age}</div>
-//                                     <button onClick={() => this.props.handleDeleteUser(item.id)}>Delete</button>
-//                                 </div>
-//                             )
-//                         })}
-//                     </div>
-//                 }
-//             </div >
-//         );
-//     }
-// }
 
 const DisplayInfor = (props) => {
     const { listUsers } = props;
+
+    const [isShowHideListUser, setShowHideListUser] = useState(true);
+
+    const handleShowHideListUser = () => {
+        setShowHideListUser(!isShowHideListUser)
+    }
+
     return (
         <div>
+
+            <div onClick={() => handleShowHideListUser()}>{isShowHideListUser === true ? "Hide list user's" : "Show list user's"}</div>
             {
-                true &&
+                isShowHideListUser &&
                 <div>
                     {listUsers.map((item) => {
                         return (
