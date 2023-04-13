@@ -1,41 +1,11 @@
-import logo from './logo.svg';
 import './App.scss';
-import MyComponent from './components/MyComponents';
-import { useDispatch, useSelector } from 'react-redux';
-import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
-import React from 'react';
+const App = () => {
 
-class App extends React.Component {
-
-
-  render() {
-    return (
-      <div className="App">
-        <MyComponent />
-      </div>
-    );
-  }
+  return (
+    <div className="app-container">
+      chào
+      <button className='btn btn-primary'>chào</button>
+    </div>
+  );
 }
-
-
-// const App = () => {
-//   const count = useSelector(state => state.counter.count);
-//   console.log('check state: ', useSelector(state => state.counter))
-//   const dispatch = useDispatch();
-
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <div>Count = {count}</div>
-//         <button onClick={() => dispatch(increaseCounter())}>Increase</button>
-//         <button onClick={() => dispatch(decreaseCounter())}>Decrease</button>
-//       </header>
-//       <MyComponent />
-//     </div>
-//   );
-// }
 export default App;

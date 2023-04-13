@@ -21,8 +21,9 @@ const DisplayInfor = (props) => {
 
     return (
         <div>
-
-            <div onClick={() => handleShowHideListUser()}>{isShowHideListUser === true ? "Hide list user's" : "Show list user's"}</div>
+            <div onClick={() => handleShowHideListUser()}>
+                {isShowHideListUser === true ? "Hide list user's" : "Show list user's"}
+            </div>
             {
                 isShowHideListUser &&
                 <div>
