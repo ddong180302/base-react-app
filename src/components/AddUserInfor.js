@@ -22,11 +22,10 @@ class AddUserInfor extends React.Component {
     handleOnClick = (event) => {
         event.preventDefault();
         this.props.handleAddNewUser({
-            id: Math.floor((Math.random() * 100) + 1) + "-random",
+            id: Math.floor((Math.random() * 1000) + 1) + "-random",
             name: this.state.name,
             age: this.state.age
         })
-        console.log('check')
     }
     render() {
         return (

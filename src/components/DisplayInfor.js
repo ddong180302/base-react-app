@@ -3,8 +3,31 @@ import './DisplayInfor.scss';
 
 class DisplayInfor extends React.Component {
 
-    state = {
-        isShowListUser: true
+    constructor(props) {
+        console.log('>>>contructor: 1')
+        super(props);
+        this.state = {
+            isShowListUser: true
+        }
+    }
+
+    componentDidMount() {
+        console.log('>>>component did muont: 2')
+        setTimeout(() => {
+            document.title = 'Display InFor'
+        }, 3000)
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('check update: 4', this.props, 'prevprops: ', prevProps)
+        if (this.props.listUsers !== prevProps.listUsers) {
+            if (this.props.listUsers.length === 5) {
+                alert('5 thôi')
+            } else {
+
+            }
+        }
     }
     handleShowHide = () => {
         this.setState({
@@ -12,6 +35,7 @@ class DisplayInfor extends React.Component {
         })
     }
     render() {
+        console.log('>>>check render: 3')
         const { listUsers } = this.props;
         return (
             <div className="header-infor">
