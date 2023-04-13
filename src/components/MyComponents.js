@@ -31,6 +31,14 @@ class MyComponent extends React.Component {
         })
     }
 
+    handleDeleteUser = (userId) => {
+        let coppyListUsers = [...this.state.listUsers]
+        coppyListUsers = coppyListUsers.filter(item => item.id !== userId)
+        this.setState({
+            listUsers: coppyListUsers
+        })
+    }
+
     //JSX
     render() {
         return (
@@ -41,6 +49,7 @@ class MyComponent extends React.Component {
                 <br />
                 <DisplayInfor
                     listUsers={this.state.listUsers}
+                    handleDeleteUser={this.handleDeleteUser}
                 />
             </div>
         );

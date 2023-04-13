@@ -1,5 +1,4 @@
 import React from "react";
-import logo from '.././logo.svg';
 import './DisplayInfor.scss';
 
 class DisplayInfor extends React.Component {
@@ -16,7 +15,6 @@ class DisplayInfor extends React.Component {
         const { listUsers } = this.props;
         return (
             <div className="header-infor">
-                <img src={logo} />
                 <div>
                     <span onClick={() => this.handleShowHide()}>
 
@@ -29,7 +27,8 @@ class DisplayInfor extends React.Component {
                             return (
                                 <div key={item.id} className={+item.age > 18 ? "green" : "red"}>
                                     <div>ten: {item.name}</div>
-                                    <div>ten: {item.age}</div>
+                                    <div>tuoi: {item.age}</div>
+                                    <button onClick={() => this.props.handleDeleteUser(item.id)}>Delete</button>
                                 </div>
                             )
                         })}
