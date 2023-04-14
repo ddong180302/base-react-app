@@ -9,14 +9,26 @@ body {
 }
 
 .app-container {
+  height: 10000px;
+
   .header-container {
     .navbar {
+      position  : fixed;
+      z-index   : 9999;
+      width     : 100%;
+      background: transparent;
+
       .nav-link {
         &.active {
           color: rgb(0, 208, 255);
         }
       }
     }
-
   }
+}
+
+video {
+  position: fixed;
+  bottom  : 0;
+  width   : 100vw;
 }
