@@ -2,19 +2,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 const Header = () => {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Link className='navbar-brand' to="/">React-Bootstrap</Link>
+                <NavLink className='navbar-brand' to="/">React-Bootstrap</NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className='nav-link' to="/">Home</Link>
-                        <Link className='nav-link' to="/users">Users</Link>
-                        <Link className='nav-link' to="/admins">Admin</Link>
+                        <NavLink className='nav-link' to="/">Home</NavLink>
+                        <NavLink className='nav-link' to="/users">Users</NavLink>
+                        <NavLink className='nav-link' to="/admins">Admin</NavLink>
                     </Nav>
                     <Nav>
                         <NavDropdown title="Setting" id="basic-nav-dropdown">
