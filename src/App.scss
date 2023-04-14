@@ -8,27 +8,109 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+
 .app-container {
-  height: 10000px;
+  @media (min-width: 1500px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+      max-width: 1500px !important;
+    }
+  }
 
   .header-container {
     .navbar {
-      position  : fixed;
-      z-index   : 9999;
-      width     : 100%;
-      background: transparent;
+      position        : fixed;
+      z-index         : 9999;
+      width           : 100%;
+      background-color: rgba(0, 0, 0, 0) !important;
+      padding-top     : 20px;
 
       .nav-link {
         &.active {
           color: rgb(0, 208, 255);
         }
       }
+
+      .btn-login {
+        border-radius   : 5px;
+        margin-right    : 15px;
+        padding         : 0 15px;
+        border          : 1px solid #535353;
+        background-color: rgb(242, 236, 228);
+        color           : black;
+        height          : 40px;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .btn-signup {
+        border-radius   : 5px;
+        margin-right    : 15px;
+        padding         : 0 15px;
+        border          : 1px solid #535353;
+        background-color: black;
+        color           : white;
+        height          : 40px;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
-}
 
-video {
-  position: fixed;
-  bottom  : 0;
-  width   : 100vw;
+  .homepage-container {
+
+    video {
+      position: relative;
+      bottom  : 0;
+      width   : 100vw;
+    }
+
+    .homepage-content {
+      position      : absolute;
+      top           : 300px;
+      width         : 30%;
+      left          : 150px;
+      display       : flex;
+      flex-direction: column;
+      gap           : 30px;
+
+      .title-one {
+        font-size     : 64px;
+        line-height   : 1.2;
+        letter-spacing: normal;
+        font-weight   : 350;
+      }
+
+      .title-two {
+        font-size: 22px;
+      }
+
+      .title-three {
+        button {
+          border-radius   : 5px;
+          padding         : 0 15px;
+          border          : 1px solid #535353;
+          background-color: black;
+          color           : white;
+          height          : 50px;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+
+
 }
