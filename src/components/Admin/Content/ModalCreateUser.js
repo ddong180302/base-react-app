@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { postCreateNewUser } from '../../../services/apiServices';
 
 const ModalCreateUser = (props) => {
     const { show, setShow } = props;
@@ -31,9 +30,9 @@ const ModalCreateUser = (props) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setPreviewImage(URL.createObjectURL(event.target.files[0]))
             setImage(event.target.files[0])
-        } //else {
-        //     setPreviewImage("")
-        // }
+        } else {
+
+        }
         console.log('upload file', event.target.files[0])
     }
     const validateEmail = (email) => {
@@ -73,27 +72,15 @@ const ModalCreateUser = (props) => {
             return;
         }
 
-        //submit data
-
-        // console.log("data: ", data)
-        const data = new FormData();
-        data.append('email', email);
-        data.append('password', password);
-        data.append('username', username);
-        data.append('role', role);
-        data.append('image', image);
-        // form.append('my_buffer', new Buffer(10));
-        // form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
-
-        let res = await axios.post('http://localhost:8800/api/v1/participant', data)
-        console.log('check res: ', res);
-        if (res.data && res.data.errCode === 0) {
+        let data = await postCreateNewUser(email, password, username, role, image);
+        console.log('check res: ', data);
+        if (data && data.errCode === 0) {
             toast.success('Create a new user succeed!')
             handleClose();
         }
 
-        if (res.data && res.data.errCode !== 0) {
-            toast(res.data.errMessage);
+        if (data && data.errCode !== 0) {
+            toast(data.errMessage);
         }
     }
 
