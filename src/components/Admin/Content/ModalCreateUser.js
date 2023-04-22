@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { postCreateNewUser } from '../../../services/apiServices';
+import getBase64 from '../../../utils/CommonUtils';
 
 const ModalCreateUser = (props) => {
     const { show, setShow } = props;
@@ -26,10 +27,15 @@ const ModalCreateUser = (props) => {
     const [image, setImage] = useState("")
     const [previewImage, setPreviewImage] = useState("")
 
-    const handleUploadImage = (event) => {
-        if (event.target && event.target.files && event.target.files[0]) {
-            setPreviewImage(URL.createObjectURL(event.target.files[0]))
-            setImage(event.target.files[0])
+    const handleUploadImage = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let base64 = await getBase64(file);
+            setPreviewImage(URL.createObjectURL(file))
+            setImage(base64)
+            console.log('check setImage(base64): ', image);
+            console.log('check (base64): ', base64);
         } else {
 
         }
@@ -54,21 +60,6 @@ const ModalCreateUser = (props) => {
 
         if (!password) {
             toast.error('Invalid password');
-            return;
-        }
-
-        if (!username) {
-            toast.error('Invalid username');
-            return;
-        }
-
-        if (!role) {
-            toast.error('Invalid role');
-            return;
-        }
-
-        if (!image) {
-            toast.error('Invalid image');
             return;
         }
 
@@ -151,7 +142,7 @@ const ModalCreateUser = (props) => {
                         </div>
                         <div className='col-md-12 img-preview'>
                             {previewImage ?
-                                <img src={previewImage} />
+                                <img src={previewImage} alt='' />
                                 :
                                 <span>Preview Image</span>
                             }
