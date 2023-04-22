@@ -13,6 +13,11 @@ const postCreateNewUser = async (email, password, username, role, image) => {
     return await axios.post('api/v1/participant', data)
 }
 
+const getAllUser = async () => {
+    return await axios.get('api/v1/participant/all')
+}
+
 export {
-    postCreateNewUser
+    postCreateNewUser,
+    getAllUser
 }
