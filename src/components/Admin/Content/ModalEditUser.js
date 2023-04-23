@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { postCreateNewUser } from '../../../services/apiServices';
 //import getBase64 from '../../../utils/CommonUtils';
+import _ from 'lodash';
+const ModalEditUser = (props) => {
+    const { show, setShow, dataEdit } = props;
+    console.log('data updata: ', dataEdit)
 
-const ModalCreateUser = (props) => {
-    const { show, setShow } = props;
+
 
     const handleClose = () => {
         setShow(false)
         setEmail("")
         setPassword("")
         setUsername("")
-        setRole("USER")
+        setRole("")
         setImage("")
         setPreviewImage("")
     };
@@ -23,9 +26,26 @@ const ModalCreateUser = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
-    const [role, setRole] = useState("USER")
+    const [role, setRole] = useState("")
     const [image, setImage] = useState("")
     const [previewImage, setPreviewImage] = useState("")
+
+
+    useEffect(() => {
+        console.log('check data edit:', dataEdit)
+        if (!_.isEmpty(dataEdit)) {
+            setEmail(dataEdit.email)
+            setUsername(dataEdit.username)
+            setRole("ADMIN")
+            setImage("")
+            if (dataEdit.image) {
+                setPreviewImage(`data:image/png;base64,${dataEdit.image}`)
+            }
+            console.log('check image: ', dataEdit.image)
+            console.log('check role: ', dataEdit.role)
+
+        }
+    }, [dataEdit])
 
     const handleUploadImage = async (event) => {
         let data = event.target.files;
@@ -76,10 +96,6 @@ const ModalCreateUser = (props) => {
 
     return (
         <>
-            {/* <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button> */}
-
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -88,7 +104,7 @@ const ModalCreateUser = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add new user</Modal.Title>
+                    <Modal.Title>Edit a user</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -99,6 +115,7 @@ const ModalCreateUser = (props) => {
                                 className="form-control"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
+                                disabled
                             />
                         </div>
                         <div className="col-md-6">
@@ -108,6 +125,7 @@ const ModalCreateUser = (props) => {
                                 className="form-control"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
+                                disabled
                             />
                         </div>
                         <div className="col-md-6">
@@ -120,7 +138,7 @@ const ModalCreateUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Role</label>s
+                            <label className="form-label">Role</label>
                             <select className="form-select" onChange={(event) => setRole(event.target.value)}>
                                 <option value="USER">USER</option>
                                 <option value="ADMIN">ADMIN</option>
@@ -161,4 +179,4 @@ const ModalCreateUser = (props) => {
     );
 }
 
-export default ModalCreateUser;
+export default ModalEditUser;
