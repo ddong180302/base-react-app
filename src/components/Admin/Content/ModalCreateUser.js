@@ -30,6 +30,7 @@ const ModalCreateUser = (props) => {
     const handleUploadImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
+        console.log(file)
         if (file) {
             //let base64 = await getBase64(file);
             setPreviewImage(URL.createObjectURL(file))
@@ -121,7 +122,11 @@ const ModalCreateUser = (props) => {
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Role</label>s
-                            <select className="form-select" onChange={(event) => setRole(event.target.value)}>
+                            <select
+                                className="form-select"
+                                onChange={(event) => setRole(event.target.value)}
+                                value={role}
+                            >
                                 <option value="USER">USER</option>
                                 <option value="ADMIN">ADMIN</option>
                             </select>

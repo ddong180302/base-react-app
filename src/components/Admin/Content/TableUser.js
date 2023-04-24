@@ -2,7 +2,7 @@
 
 
 const TableUser = (props) => {
-    const { arrUsers, handleClickBtnEdit } = props;
+    const { arrUsers, handleClickBtnEdit, handleClickBtnView, handleClickBtnDelete } = props;
     return (
         <>
             <table className="table table-dark table-striped table-hover">
@@ -24,9 +24,9 @@ const TableUser = (props) => {
                                 <td>{item.username}</td>
                                 <td>{item.role}</td>
                                 <td>
-                                    <button className="btn btn-info">View</button>
+                                    <button className="btn btn-info" onClick={() => handleClickBtnView(item)}>View</button>
                                     <button className="btn btn-warning mx-3" onClick={() => handleClickBtnEdit(item)}>Eidt</button>
-                                    <button className="btn btn-danger">Delete</button>
+                                    <button className="btn btn-danger" onClick={() => handleClickBtnDelete(item)}>Delete</button>
                                 </td>
                             </tr>
                         )

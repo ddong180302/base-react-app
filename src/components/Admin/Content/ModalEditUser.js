@@ -3,11 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices';
-//import getBase64 from '../../../utils/CommonUtils';
+import { putEditUser } from '../../../services/apiServices';
 import _ from 'lodash';
 const ModalEditUser = (props) => {
-    const { show, setShow, dataEdit } = props;
+    const { show, setShow, dataEdit, resetEditData } = props;
     console.log('data updata: ', dataEdit)
 
 
@@ -20,6 +19,7 @@ const ModalEditUser = (props) => {
         setRole("")
         setImage("")
         setPreviewImage("")
+        resetEditData()
     };
     //const handleShow = () => setShow(true);
 
@@ -36,14 +36,12 @@ const ModalEditUser = (props) => {
         if (!_.isEmpty(dataEdit)) {
             setEmail(dataEdit.email)
             setUsername(dataEdit.username)
-            setRole("ADMIN")
-            setImage("")
+            setRole(dataEdit.role)
+            setImage(`${dataEdit.image}`)
             if (dataEdit.image) {
                 setPreviewImage(`data:image/png;base64,${dataEdit.image}`)
             }
-            console.log('check image: ', dataEdit.image)
-            console.log('check role: ', dataEdit.role)
-
+            console.log('image:', `${dataEdit.image}`)
         }
     }, [dataEdit])
 
@@ -51,7 +49,6 @@ const ModalEditUser = (props) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
-            //let base64 = await getBase64(file);
             setPreviewImage(URL.createObjectURL(file))
             setImage(file)
         } else {
@@ -59,6 +56,7 @@ const ModalEditUser = (props) => {
         }
         console.log('upload file', event.target.files[0])
     }
+
     const validateEmail = (email) => {
         return String(email)
             .toLowerCase()
@@ -76,15 +74,11 @@ const ModalEditUser = (props) => {
             return;
         }
 
-        if (!password) {
-            toast.error('Invalid password');
-            return;
-        }
 
-        let data = await postCreateNewUser(email, password, username, role, image);
+        let data = await putEditUser(dataEdit.id, username, role, image);
         console.log('check res: ', data);
         if (data && data.errCode === 0) {
-            toast.success('Create a new user succeed!')
+            toast.success(data.errMessage)
             handleClose();
             await props.fetchListUsers();
         }
@@ -139,7 +133,11 @@ const ModalEditUser = (props) => {
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Role</label>
-                            <select className="form-select" onChange={(event) => setRole(event.target.value)}>
+                            <select
+                                className="form-select"
+                                onChange={(event) => setRole(event.target.value)}
+                                value={role}
+                            >
                                 <option value="USER">USER</option>
                                 <option value="ADMIN">ADMIN</option>
                             </select>
