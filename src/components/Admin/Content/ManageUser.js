@@ -3,12 +3,17 @@ import './ManageUser.scss';
 import { FcPlus } from 'react-icons/fc';
 import { useState, useEffect } from "react";
 import TableUser from "./TableUser";
-import { getAllUser } from "../../../services/apiServices";
+import { getAllUser, getUserWithPaginate } from "../../../services/apiServices";
 import ModalEditUser from "./ModalEditUser";
 import ModalViewUser from "./ModalViewUser";
 import ModalDeleteUser from "./ModalDeleteUser";
+import TableUserPaginate from "./TableUserPaginate";
 
 const ManageUser = (props) => {
+    const LIMIT_USER = 5;
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1)
+
     const [showModalCreateUser, setShowModalCreateUser] = useState(false);
     const [showModalEditUser, setShowModalEditUser] = useState(false)
     const [showModalViewUser, setShowModalViewUser] = useState(false)
@@ -19,7 +24,8 @@ const ManageUser = (props) => {
     const [arrUsers, setArrUsers] = useState([]);
 
     useEffect(() => {
-        fetchListUsers();
+        //fetchListUsers();
+        fetchListUsersWithPaginate(1);
     }, [])
 
     const fetchListUsers = async () => {
@@ -27,7 +33,15 @@ const ManageUser = (props) => {
         if (res.data && res.errCode === 0) {
             setArrUsers(res.data)
         }
+    }
 
+    const fetchListUsersWithPaginate = async (page) => {
+        let res = await getUserWithPaginate(page, LIMIT_USER);
+        console.log('check res: ', res)
+        if (res.data && res.errCode === 0) {
+            setArrUsers(res.data.users)
+            setPageCount(res.data.totalPages)
+        }
     }
 
     const handleClickBtnDelete = (user) => {
@@ -65,25 +79,39 @@ const ManageUser = (props) => {
                     </button>
                 </div>
                 <div className="table-users-container">
-                    <TableUser
+                    {/* <TableUser
                         arrUsers={arrUsers}
                         handleClickBtnEdit={handleClickBtnEdit}
                         handleClickBtnView={handleClickBtnView}
                         handleClickBtnDelete={handleClickBtnDelete}
+                    /> */}
+                    <TableUserPaginate
+                        arrUsers={arrUsers}
+                        handleClickBtnEdit={handleClickBtnEdit}
+                        handleClickBtnView={handleClickBtnView}
+                        handleClickBtnDelete={handleClickBtnDelete}
+                        fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+                        pageCount={pageCount}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
                     />
                 </div>
                 <ModalCreateUser
                     show={showModalCreateUser}
                     setShow={setShowModalCreateUser}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 />
 
                 <ModalEditUser
                     show={showModalEditUser}
                     setShow={setShowModalEditUser}
                     dataEdit={dataEdit}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPaginate={fetchListUsersWithPaginate}
                     resetEditData={resetEditData}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 />
 
                 <ModalViewUser
@@ -97,7 +125,9 @@ const ManageUser = (props) => {
                     setShowModalDeleteUser={setShowModalDeleteUser}
                     dataDelete={dataDelete}
                     resetEditData={resetEditData}
-                    fetchListUsers={fetchListUsers}
+                    fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 />
 
 

@@ -80,7 +80,8 @@ const ModalEditUser = (props) => {
         if (data && data.errCode === 0) {
             toast.success(data.errMessage)
             handleClose();
-            await props.fetchListUsers();
+            //props.setCurrentPage(1)
+            await props.fetchListUsersWithPaginate(props.currentPage);
         }
 
         if (data && data.errCode !== 0) {

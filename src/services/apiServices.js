@@ -27,16 +27,21 @@ const getAllUser = async () => {
 }
 
 const deleteAUser = async (id) => {
-    return await axios.delete('/api/v1/participant/delete', {
+    return await axios.delete('api/v1/participant/delete', {
         data: {
             id: id
         }
     })
 }
 
+const getUserWithPaginate = async (page, limit) => {
+    return await axios.get(`api/v1/participant/pagination?page=${page}&limit=${limit}`)
+}
+
 export {
     postCreateNewUser,
     getAllUser,
     putEditUser,
-    deleteAUser
+    deleteAUser,
+    getUserWithPaginate
 }
