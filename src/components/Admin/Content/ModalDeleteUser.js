@@ -42,7 +42,7 @@ const ModalDeleteUser = (props) => {
             toast.success(data.errMessage)
             handleClose();
             await props.setCurrentPage(1)
-            await props.fetchListUsersWithPaginate();
+            await props.fetchListUsersWithPaginate(1);
         }
         if (data && data.errCode !== 0) {
             toast(data.errMessage);

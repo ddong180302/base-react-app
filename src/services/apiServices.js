@@ -10,7 +10,7 @@ const postCreateNewUser = async (email, password, username, role, image) => {
     data.append('role', role);
     data.append('image', image);
 
-    return await axios.post('api/v1/participant', data)
+    return await axios.post('/api/v1/participant', data)
 }
 
 const putEditUser = async (id, username, role, image) => {
@@ -19,15 +19,15 @@ const putEditUser = async (id, username, role, image) => {
     data.append('username', username);
     data.append('role', role);
     data.append('image', image);
-    return await axios.put('api/v1/participant/edit', data)
+    return await axios.put('/api/v1/participant/edit', data)
 }
 
 const getAllUser = async () => {
-    return await axios.get('api/v1/participant/all')
+    return await axios.get('/api/v1/participant/all')
 }
 
 const deleteAUser = async (id) => {
-    return await axios.delete('api/v1/participant/delete', {
+    return await axios.delete('/api/v1/participant/delete', {
         data: {
             id: id
         }
@@ -35,7 +35,15 @@ const deleteAUser = async (id) => {
 }
 
 const getUserWithPaginate = async (page, limit) => {
-    return await axios.get(`api/v1/participant/pagination?page=${page}&limit=${limit}`)
+    return await axios.get(`/api/v1/participant/pagination?page=${page}&limit=${limit}`)
+}
+
+const postLogin = async (email, password) => {
+    return await axios.post('/api/v1/login',
+        {
+            email: email,
+            password: password
+        });
 }
 
 export {
@@ -43,5 +51,6 @@ export {
     getAllUser,
     putEditUser,
     deleteAUser,
-    getUserWithPaginate
+    getUserWithPaginate,
+    postLogin
 }

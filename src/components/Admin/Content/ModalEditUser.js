@@ -7,9 +7,6 @@ import { putEditUser } from '../../../services/apiServices';
 import _ from 'lodash';
 const ModalEditUser = (props) => {
     const { show, setShow, dataEdit, resetEditData } = props;
-    console.log('data updata: ', dataEdit)
-
-
 
     const handleClose = () => {
         setShow(false)
@@ -32,7 +29,6 @@ const ModalEditUser = (props) => {
 
 
     useEffect(() => {
-        console.log('check data edit:', dataEdit)
         if (!_.isEmpty(dataEdit)) {
             setEmail(dataEdit.email)
             setUsername(dataEdit.username)
