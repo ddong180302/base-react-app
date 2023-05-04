@@ -5,6 +5,7 @@ import { postLogin } from '../../services/apiServices';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction';
+import { ImSpinner10 } from "react-icons/im";
 
 const Login = (props) => {
 
@@ -12,6 +13,8 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false)
+
 
     const validateEmail = (email) => {
         return String(email)
@@ -32,17 +35,19 @@ const Login = (props) => {
             toast.error('Invalid password')
             return;
         }
-
+        setIsLoading(true);
         let data = await postLogin(email, password);
         console.log('check data: ', data);
         if (data && data.errCode === 0) {
             dispatch(doLogin(data))
             toast.success(data.errMessage)
+            setIsLoading(false)
             navigate('/')
         }
 
         if (data && data.errCode !== 0) {
             toast(data.errMessage)
+            setIsLoading(false)
         }
     }
 
@@ -88,8 +93,10 @@ const Login = (props) => {
                     <button
                         className='btn-submit'
                         onClick={() => handleLogin()}
+                        disabled={isLoading}
                     >
-                        Login to Quiz
+                        {isLoading === true && <ImSpinner10 className='loader-icon' />}
+                        <span>Login to Quiz</span>
                     </button>
                 </div>
                 <div className='back-homepage text-center'>
