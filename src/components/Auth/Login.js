@@ -45,13 +45,17 @@ const Login = (props) => {
         }
     }
 
+    const handleRegister = () => {
+        navigate('/register')
+    }
+
     return (
         <div className="login-container">
             <div className='header'>
                 <span className='header-text'>
                     Don't have an account yet?
                 </span>
-                <button className='header-btn'>Sign up</button>
+                <button className='header-btn' onClick={() => handleRegister()}>Sign up</button>
             </div>
             <div className='title col-4 mx-auto' >
                 Tran Dang Dong
@@ -70,7 +74,7 @@ const Login = (props) => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label>PassWord</label>
+                    <label>Password</label>
                     <input
                         type='password'
                         className='form-control'

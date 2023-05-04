@@ -1,0 +1,129 @@
+.header {
+    text-align: right;
+    padding   : 10px 100px 10px 0;
+
+    button {
+        margin-left  : 15px;
+        border       : none;
+        background   : greenyellow;
+        font-size    : 14px;
+        padding      : 4px 10px;
+        border-radius: 4px;
+        cursor       : pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.register-container {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    flex-direction : column;
+
+    .title {
+        font-size: 16px;
+        padding  : 10px;
+    }
+
+    .welcome {
+        font-size: 14px;
+        padding  : 10px;
+    }
+
+    .content-form {
+        display       : flex;
+        flex-direction: column;
+
+        .content-email {
+            display       : flex;
+            flex-direction: column;
+            margin-top    : 20px;
+
+            .input-email {
+                width     : 300px;
+                margin-top: 5px;
+                border    : 1px solid #333;
+                outline   : none;
+            }
+        }
+
+        .content-password {
+            display       : flex;
+            flex-direction: column;
+            margin-top    : 20px;
+            position      : relative;
+
+            .input-password {
+                width     : 300px;
+                margin-top: 5px;
+                border    : 1px solid #333;
+                outline   : none;
+            }
+
+            .eye {
+                position: absolute;
+                top     : 30px;
+                right   : 10px;
+            }
+        }
+
+        .content-confirm-password {
+            display       : flex;
+            flex-direction: column;
+            position      : relative;
+            margin-top    : 20px;
+
+            .input-confirm-password {
+                width     : 300px;
+                margin-top: 5px;
+                border    : 1px solid #333;
+                outline   : none;
+            }
+
+            .eye {
+                position: absolute;
+                top     : 30px;
+                right   : 10px;
+            }
+        }
+
+        .content-username {
+            display       : flex;
+            flex-direction: column;
+            margin-top    : 20px;
+
+            .input-username {
+                width     : 300px;
+                margin-top: 5px;
+                border    : 1px solid #333;
+                outline   : none;
+            }
+        }
+
+        button {
+            margin       : 20px 0;
+            border       : none;
+            padding      : 5px 0;
+            background   : #262625;
+            color        : white;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: aquamarine;
+                color           : #333;
+            }
+        }
+
+        .back-homepage {
+            text-align: center;
+            cursor    : pointer;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
