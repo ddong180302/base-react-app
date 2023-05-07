@@ -72,7 +72,6 @@ const ModalEditUser = (props) => {
 
 
         let data = await putEditUser(dataEdit.id, username, role, image);
-        console.log('check res: ', data);
         if (data && data.errCode === 0) {
             toast.success(data.errMessage)
             handleClose();
