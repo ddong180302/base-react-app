@@ -3,12 +3,16 @@ import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiServices";
 import _ from 'lodash';
 import './DetailQuiz.scss'
+import Question from "./Question";
+import { useState } from "react";
 
 
 const DetailQuiz = (props) => {
     const params = useParams();
     const quizId = params.id;
     const location = useLocation();
+    const [dataQuiz, setDataQuiz] = useState([]);
+    const [index, setIndex] = useState(0);
     console.log('check id: ', quizId)
     useEffect(() => {
         fetchQuestions();
@@ -41,7 +45,21 @@ const DetailQuiz = (props) => {
                 })
                 .value();
             console.log('data tda: ', data)
+            setDataQuiz(data);
         }
+    }
+
+    const handleNext = () => {
+        if (dataQuiz && dataQuiz.length > index + 1) {
+            setIndex(index + 1)
+        }
+    }
+
+    const handlePrev = () => {
+        if (index - 1 < 0) {
+            return;
+        }
+        setIndex(index - 1)
     }
     console.log("check params: ", params)
     return (
@@ -55,17 +73,21 @@ const DetailQuiz = (props) => {
                     <img />
                 </div>
                 <div className="q-content">
-                    <div className="question">How are you doing?</div>
-                    <div className="answer">
-                        <div className="a-child">A. jskdjkfdjdfk</div>
-                        <div className="a-child">B. fsdfssdfsdf</div>
-                        <div className="a-child">C. jskdjkfdjdfk</div>
-                        <div className="a-child">D. jskdjkfdjdfk</div>
-                    </div>
+                    <Question
+                        index={index}
+                        dataQuiz={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                    />
                 </div>
                 <div className="footer">
-                    <button className="btn btn-secondary">Prev</button>
-                    <button className="btn btn-primary">Next</button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => handlePrev()}
+                    >
+                        Prev</button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => handleNext()}
+                    >Next</button>
                 </div>
             </div>
             <div className="right-content">
