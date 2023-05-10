@@ -15,12 +15,12 @@ const ManageUser = (props) => {
     const [currentPage, setCurrentPage] = useState(1)
 
     const [showModalCreateUser, setShowModalCreateUser] = useState(false);
-    const [showModalEditUser, setShowModalEditUser] = useState(false)
-    const [showModalViewUser, setShowModalViewUser] = useState(false)
-    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false)
-    const [dataEdit, setDataEdit] = useState({})
-    const [dataDelete, setDataDelete] = useState({})
-    const [dataView, setDataView] = useState({})
+    const [showModalEditUser, setShowModalEditUser] = useState(false);
+    const [showModalViewUser, setShowModalViewUser] = useState(false);
+    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
+    const [dataEdit, setDataEdit] = useState({});
+    const [dataDelete, setDataDelete] = useState({});
+    const [dataView, setDataView] = useState({});
     const [arrUsers, setArrUsers] = useState([]);
 
     useEffect(() => {
