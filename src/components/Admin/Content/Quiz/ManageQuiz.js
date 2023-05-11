@@ -31,7 +31,6 @@ const ManageQuiz = (props) => {
         }
 
         let res = await postCreateNewQuiz(name, description, type?.value, image);
-        console.log("check response: ", res)
         if (res && res.errCode === 0) {
             toast.success(res.errMessage);
             setName("");
