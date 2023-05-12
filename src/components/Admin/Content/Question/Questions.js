@@ -7,36 +7,56 @@ import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
-
+import { useEffect } from 'react';
+import { getAllQuizForAdmin, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from '../../../../services/apiServices';
+import { toast } from "react-toastify";
 
 const Questions = (props) => {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
-    const [selectedQuiz, setSelectedQuiz] = useState({});
-    const [questions, setQuestions] = useState([
+    const initQuestions = [
         {
             id: uuidv4(),
             description: '',
             imageFile: '',
             imageName: '',
+            isValidQ: false,
             answers: [
                 {
                     id: uuidv4(),
                     description: '',
-                    isCorrect: false
+                    isCorrect: false,
+                    isValidA: false,
                 }
             ]
         }
-    ]);
+    ]
+    const [questions, setQuestions] = useState(initQuestions);
 
     const [isPreviewImage, setIsPreviewImage] = useState(false);
     const [dataImagePreview, setDataImagePreview] = useState({
         title: '',
         url: ''
     });
+
+    const [listQuiz, setListQuiz] = useState([]);
+    const [selectedQuiz, setSelectedQuiz] = useState({});
+
+    useEffect(() => {
+        fetchQuiz();
+    }, [])
+
+    const fetchQuiz = async () => {
+        let res = await getAllQuizForAdmin();
+        console.log(res)
+        if (res && res.errCode === 0) {
+            let newQuiz = res.data.map(item => {
+                return {
+                    value: item.id,
+                    label: `${item.id} - ${item.description}`
+                }
+            })
+            setListQuiz(newQuiz);
+        }
+    }
 
     const handleAddRemoveQuestion = (type, id) => {
         if (type === 'ADD') {
@@ -127,8 +147,72 @@ const Questions = (props) => {
         }
     }
 
-    const handleSubmitQuestionsForQuiz = () => {
-        console.log(questions)
+    const handleSubmitQuestionsForQuiz = async () => {
+        //todo
+
+        //validate data
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error("Please choose a Quiz")
+            return;
+        }
+
+        //validate question
+        let isValidQuestion = true;
+        let indexQ1 = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (_.isEmpty(questions[i].description)) {
+                isValidQuestion = false;
+                indexQ1 = i;
+                //questions[i].isValidQ = true;
+                break;
+            }
+        }
+
+        if (isValidQuestion === false) {
+
+            toast.error(`Not empty description for Question ${indexQ1 + 1}`)
+            return;
+        }
+
+        //validate answer
+        let isValidAnswer = true;
+        let indexQ = 0, indexA = 0;
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (_.isEmpty(questions[i].answers[j].description)) {
+                    isValidAnswer = false;
+                    indexA = j;
+                    // questions[i].answers[j].isValidA = true;
+                    break;
+                }
+            }
+            indexQ = i;
+            if (isValidAnswer === false) break;
+        }
+
+        if (isValidAnswer === false) {
+            toast.error(`Not empty Answer ${indexA + 1} at Question ${indexQ + 1}`)
+            return;
+        }
+
+        //submit questions
+        for (const question of questions) {
+            const q = await postCreateNewQuestionForQuiz(
+                +selectedQuiz.value,
+                question.description,
+                question.imageFile,
+            );
+            //submit answers
+            for (const answer of question.answers) {
+                await postCreateNewAnswerForQuestion(
+                    answer.description,
+                    answer.isCorrect,
+                    q.data.id
+                )
+            }
+        }
+        toast.success('Create questions and answers succeed!');
+        setQuestions(initQuestions);
     }
 
     const handlePreviewImage = (questionId) => {
@@ -154,7 +238,7 @@ const Questions = (props) => {
                     <Select
                         defaultValue={selectedQuiz}
                         onChange={setSelectedQuiz}
-                        options={options}
+                        options={listQuiz}
                     />
                 </div>
                 <div className='mt-3 mb-2'>
@@ -169,7 +253,7 @@ const Questions = (props) => {
                                     <div className="form-floating description" >
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={question.isValidQ === true ? "form-control is-invalid" : "form-control"}
                                             placeholder="name@example.com"
                                             value={question.description}
                                             onChange={(event) => handleOnChange('QUESTION', question.id, event.target.value)}
@@ -226,7 +310,7 @@ const Questions = (props) => {
                                                 <div className="form-floating answer-name" >
                                                     <input
                                                         type="text"
-                                                        className="form-control"
+                                                        className={answer.isValidA === true ? "form-control is-invalid" : "form-control"}
                                                         placeholder="name@example.com"
                                                         value={answer.description}
                                                         onChange={(event) => handleAnswerQuestion('INPUT', question.id, answer.id, event.target.value)}
