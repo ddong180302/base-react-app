@@ -10,7 +10,7 @@ import Lightbox from "react-awesome-lightbox";
 import { useEffect } from 'react';
 import {
     getQuizWithQA, getAllQuizForAdmin,
-    postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz
+    postUpsertQA
 } from '../../../../services/apiServices';
 import { toast } from "react-toastify";
 
@@ -231,23 +231,47 @@ const QuizQA = (props) => {
         }
 
         //submit questions
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile,
-            );
-            //submit answers
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description,
-                    answer.isCorrect,
-                    q.data.id
-                )
+        // for (const question of questions) {
+        //     const q = await postCreateNewQuestionForQuiz(
+        //         +selectedQuiz.value,
+        //         question.description,
+        //         question.imageFile,
+        //     );
+        //     //submit answers
+        //     for (const answer of question.answers) {
+        //         await postCreateNewAnswerForQuestion(
+        //             answer.description,
+        //             answer.isCorrect,
+        //             q.data.id
+        //         )
+        //     }
+        // }
+
+        let questionsClone = _.cloneDeep(questions);
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await getBase64(questionsClone[i].imageFile)
             }
         }
-        toast.success('Create questions and answers succeed!');
-        setQuestions(initQuestions);
+        let res = await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: questionsClone
+        });
+        if (res && res.errCode === 0) {
+            toast.success(res.errMessage);
+            fetchQuizWithQA();
+        } else {
+            toast.error(res.errMessage)
+        }
+
+    }
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
     }
 
     const handlePreviewImage = (questionId) => {

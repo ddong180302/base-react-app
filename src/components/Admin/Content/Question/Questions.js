@@ -202,6 +202,7 @@ const Questions = (props) => {
                 question.description,
                 question.imageFile,
             );
+            console.log(" haha", selectedQuiz.value);
             //submit answers
             for (const answer of question.answers) {
                 await postCreateNewAnswerForQuestion(
