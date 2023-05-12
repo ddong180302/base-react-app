@@ -96,6 +96,22 @@ const postCreateNewAnswerForQuestion = (description, correct_answer, questionId)
 
 }
 
+const logout = (email, refresh_token) => {
+    return axios.post('api/v1/logout', {
+        email, refresh_token
+    });
+}
+
+const postAssignQuiz = (quizId, userId) => {
+    return axios.post('api/v1/quiz-assign-to-user', {
+        quizId, userId
+    });
+}
+
+const getQuizWithQA = (quizId) => {
+    return axios.get(`/api/v1/quiz-with-qa/${quizId}`);
+}
+
 export {
     postCreateNewUser,
     getAllUser,
@@ -110,5 +126,8 @@ export {
     postCreateNewQuiz,
     getAllQuizForAdmin,
     postCreateNewQuestionForQuiz,
-    postCreateNewAnswerForQuestion
+    postCreateNewAnswerForQuestion,
+    logout,
+    postAssignQuiz,
+    getQuizWithQA
 }
