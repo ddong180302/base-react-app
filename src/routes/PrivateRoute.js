@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import(useSelector)
 
 const PrivateRoute = (props) => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)

@@ -118,6 +118,7 @@ const postUpsertQA = (data) => {
     })
 }
 
+
 export {
     postCreateNewUser,
     getAllUser,

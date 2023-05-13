@@ -21,6 +21,7 @@ const Question = (props) => {
                     <img
                         onClick={() => setIsPreviewImage(true)}
                         src={`data:image/jpeg;base64,${dataQuiz.image}`}
+                        alt=""
                     />
                     {isPreviewImage === true &&
                         <Lightbox
